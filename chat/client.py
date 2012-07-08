@@ -5,7 +5,7 @@ from time import sleep
 import _thread
 
 HOST = 'localhost'    # The remote host
-PORT = 50017              # The same port as used by the server
+PORT = 50007              # The same port as used by the server
     
 
 class ChatClient(object):
@@ -33,6 +33,8 @@ class ChatClient(object):
     
         self.window.mainloop()
         
+        self.sendSocket.send(bytes('CMD:CLOSE', 'utf8'))
+        
         self.sendSocket.close()
         self.receiveSocket.close()
     
@@ -53,14 +55,5 @@ class ChatClient(object):
                 tmp = self.chatMessages.get()
                 tmp = str(data, encoding='utf8') + '\n' + tmp
                 self.chatMessages.set(tmp)
-    
-    #===========================================================================
-    # sendSocket.sendall(b'Hello, world')
-    # sleep(2)
-    # sendSocket.sendall(b'Hello, world2')
-    # data = receiveSocket.recv(1024)
-    # 
-    # print('Received', repr(data))
-    #===========================================================================
 
 ChatClient()
